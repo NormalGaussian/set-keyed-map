@@ -20,7 +20,7 @@ describe('SetMap - Iterators', () => {
     map.set(new Set(['c', 'd']), 100);
     
     const values = Array.from(map.values());
-    assert.deepEqual(values.sort(), [42, 100]);
+    assert.deepEqual(values.sort((a, b) => a - b), [42, 100]);
   });
 
   test('should iterate over entries', () => {
