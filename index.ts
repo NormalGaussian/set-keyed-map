@@ -72,11 +72,24 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
   }
 
   set(key: K, value: V): this {
-    // Get the canonical key representation for this key - creating it if necessary
-    const canonicalKey: K =
-      this.getCannonicalKey(key) || this.createCanonicalKey(key);
-    // Set the value in the map
-    this.valueMap.set(canonicalKey, value);
+    const existingCanonicalKey = this.getCannonicalKey(key);
+    
+    if (existingCanonicalKey) {
+      // Update existing key
+      this.valueMap.set(existingCanonicalKey, value);
+    } else {
+      // Create new key and populate subkeyToKeys index
+      const canonicalKey = this.createCanonicalKey(key);
+      this.valueMap.set(canonicalKey, value);
+      
+      // Update subkeyToKeys index for each subkey in the canonical key
+      for (const subkey of canonicalKey) {
+        const keyList = this.subkeyToKeys.get(subkey) || [];
+        keyList.push(canonicalKey);
+        this.subkeyToKeys.set(subkey, keyList);
+      }
+    }
+    
     return this;
   }
 
