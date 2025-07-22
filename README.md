@@ -1,5 +1,7 @@
 # SetKeyedMap
 
+![SetKeyedMap Logo](logo.png)
+
 A map where the keys are Sets. Any two equivalent sets map to the same key, even when they are different objects.
 
 This is useful for grouping and caching over select properties in an environment where the Set object is not necessarily shared.
