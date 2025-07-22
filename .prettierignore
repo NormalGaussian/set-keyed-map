@@ -1,0 +1,7 @@
+dist/
+node_modules/
+.yarn/
+*.log
+.pnp.*
+.prettier-cache
+yarn.lock

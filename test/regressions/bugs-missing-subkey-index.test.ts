@@ -1,12 +1,12 @@
-import { test, describe } from 'node:test';
-import { strict as assert } from 'node:assert';
-import { SetMap } from '../../index.ts';
+import { test, describe } from "node:test";
+import { strict as assert } from "node:assert";
+import { SetMap } from "../../index.ts";
 
-describe('Bug: Missing subkeyToKeys Index Population in set() Method', () => {
-  test('get() should work with equivalent keys', () => {
+describe("Bug: Missing subkeyToKeys Index Population in set() Method", () => {
+  test("get() should work with equivalent keys", () => {
     const map = new SetMap<string, number>();
-    const key1 = new Set(['a', 'b']);
-    const key2 = new Set(['b', 'a']); // Same elements, different order
+    const key1 = new Set(["a", "b"]);
+    const key2 = new Set(["b", "a"]); // Same elements, different order
 
     map.set(key1, 42);
 
@@ -15,10 +15,10 @@ describe('Bug: Missing subkeyToKeys Index Population in set() Method', () => {
     assert.equal(map.get(key1), 42);
   });
 
-  test('has() should work with equivalent keys', () => {
+  test("has() should work with equivalent keys", () => {
     const map = new SetMap<string, number>();
-    const key1 = new Set(['x', 'y', 'z']);
-    const key2 = new Set(['z', 'y', 'x']); // Same elements, different order
+    const key1 = new Set(["x", "y", "z"]);
+    const key2 = new Set(["z", "y", "x"]); // Same elements, different order
 
     map.set(key1, 100);
 
@@ -27,10 +27,10 @@ describe('Bug: Missing subkeyToKeys Index Population in set() Method', () => {
     assert.equal(map.has(key1), true);
   });
 
-  test('delete() should work with equivalent keys', () => {
+  test("delete() should work with equivalent keys", () => {
     const map = new SetMap<string, number>();
-    const key1 = new Set(['foo', 'bar']);
-    const key2 = new Set(['bar', 'foo']); // Same elements, different order
+    const key1 = new Set(["foo", "bar"]);
+    const key2 = new Set(["bar", "foo"]); // Same elements, different order
 
     map.set(key1, 999);
 
@@ -40,54 +40,54 @@ describe('Bug: Missing subkeyToKeys Index Population in set() Method', () => {
     assert.equal(map.size, 0);
   });
 
-  test('different insertion orders should be equivalent', () => {
+  test("different insertion orders should be equivalent", () => {
     const map = new SetMap<string, string>();
-    const key1 = new Set(['1', '2', '3']);
-    const key2 = new Set(['3', '1', '2']);
-    const key3 = new Set(['2', '3', '1']);
+    const key1 = new Set(["1", "2", "3"]);
+    const key2 = new Set(["3", "1", "2"]);
+    const key3 = new Set(["2", "3", "1"]);
 
     // All should map to the same canonical key
-    map.set(key1, 'first');
-    assert.equal(map.get(key2), 'first');
-    assert.equal(map.get(key3), 'first');
+    map.set(key1, "first");
+    assert.equal(map.get(key2), "first");
+    assert.equal(map.get(key3), "first");
 
     // Updating with any equivalent key should update all
-    map.set(key2, 'updated');
-    assert.equal(map.get(key1), 'updated');
-    assert.equal(map.get(key3), 'updated');
+    map.set(key2, "updated");
+    assert.equal(map.get(key1), "updated");
+    assert.equal(map.get(key3), "updated");
     assert.equal(map.size, 1); // Still only one canonical key
   });
 
-  test('complex sets with multiple elements', () => {
+  test("complex sets with multiple elements", () => {
     const map = new SetMap<string, string>();
-    const key1 = new Set(['alpha', 'beta', 'gamma', 'delta']);
-    const key2 = new Set(['delta', 'alpha', 'gamma', 'beta']);
-    const key3 = new Set(['gamma', 'delta', 'alpha', 'beta']);
+    const key1 = new Set(["alpha", "beta", "gamma", "delta"]);
+    const key2 = new Set(["delta", "alpha", "gamma", "beta"]);
+    const key3 = new Set(["gamma", "delta", "alpha", "beta"]);
 
-    map.set(key1, 'complex-value');
+    map.set(key1, "complex-value");
 
     // All equivalent keys should work
-    assert.equal(map.get(key2), 'complex-value');
-    assert.equal(map.get(key3), 'complex-value');
+    assert.equal(map.get(key2), "complex-value");
+    assert.equal(map.get(key3), "complex-value");
     assert.equal(map.has(key2), true);
     assert.equal(map.has(key3), true);
   });
 
-  test('single element sets should work', () => {
+  test("single element sets should work", () => {
     const map = new SetMap<string, string>();
-    const key1 = new Set(['solo']);
-    const key2 = new Set(['solo']); // Equivalent
+    const key1 = new Set(["solo"]);
+    const key2 = new Set(["solo"]); // Equivalent
 
-    map.set(key1, 'alone');
-    assert.equal(map.get(key2), 'alone');
+    map.set(key1, "alone");
+    assert.equal(map.get(key2), "alone");
     assert.equal(map.has(key2), true);
   });
 
-  test('size reflects actual number of canonical keys', () => {
+  test("size reflects actual number of canonical keys", () => {
     const map = new SetMap<string, number>();
-    const key1 = new Set(['x', 'y']);
-    const key2 = new Set(['y', 'x']); // Equivalent to key1
-    const key3 = new Set(['a', 'b']); // Different
+    const key1 = new Set(["x", "y"]);
+    const key2 = new Set(["y", "x"]); // Equivalent to key1
+    const key3 = new Set(["a", "b"]); // Different
 
     map.set(key1, 1);
     map.set(key2, 2); // Should overwrite key1's value
@@ -99,20 +99,20 @@ describe('Bug: Missing subkeyToKeys Index Population in set() Method', () => {
     assert.equal(map.get(key3), 3);
   });
 
-  test('iteration should include all canonical keys', () => {
+  test("iteration should include all canonical keys", () => {
     const map = new SetMap<string, string>();
-    const key1 = new Set(['p', 'q']);
-    const key2 = new Set(['q', 'p']); // Equivalent
-    const key3 = new Set(['r', 's']); // Different
+    const key1 = new Set(["p", "q"]);
+    const key2 = new Set(["q", "p"]); // Equivalent
+    const key3 = new Set(["r", "s"]); // Different
 
-    map.set(key1, 'first');
-    map.set(key2, 'overwritten'); // Should overwrite first
-    map.set(key3, 'second');
+    map.set(key1, "first");
+    map.set(key2, "overwritten"); // Should overwrite first
+    map.set(key3, "second");
 
     const entries = Array.from(map.entries());
     assert.equal(entries.length, 2);
 
     const values = entries.map(([_, value]) => value).sort();
-    assert.deepEqual(values, ['overwritten', 'second']);
+    assert.deepEqual(values, ["overwritten", "second"]);
   });
 });

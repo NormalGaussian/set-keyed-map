@@ -7,7 +7,7 @@ This is useful for grouping and caching over select properties in an environment
 ## Features
 
 - **Set-based Keys**: Use Sets as keys in a Map-like interface
-- **The Key is the Set Content**: Different Set instances with the same elements are matching keys
+- **The Key is the Set Content**: Different Set instances with equivalent elements are matching keys
 - **Full Map Interface**: Implements the complete Map interface
 - **Array-like Interface**: Implements additional array-like methods
 - **Type Safe**: Full TypeScript support with generic type parameters
@@ -15,12 +15,12 @@ This is useful for grouping and caching over select properties in an environment
 ## Usage
 
 ```typescript
-import { SetMap } from 'set-map';
+import { SetMap } from "set-map";
 
 const setMap = new SetMap<string, number>();
 
-const key1 = new Set(['a', 'b', 'c']);
-const key2 = new Set(['a', 'b', 'c']); // Different object, equivalent elements
+const key1 = new Set(["a", "b", "c"]);
+const key2 = new Set(["a", "b", "c"]); // Different object, equivalent elements
 
 setMap.set(key1, 100);
 
@@ -34,6 +34,7 @@ console.log(setMap.has(key2)); // true
 ## API
 
 ### Map Interface
+
 - `set(key, value)` - Add or update a key-value pair
 - `get(key)` - Retrieve value by key
 - `has(key)` - Check if key exists
@@ -44,6 +45,7 @@ console.log(setMap.has(key2)); // true
 - `forEach(callback)` - Iterate over entries
 
 ### Array-like Methods
+
 - `every(callback)` - Test if all entries pass condition
 - `some(callback)` - Test if any entry passes condition
 - `filter(callback)` - Create new SetMap with filtered entries

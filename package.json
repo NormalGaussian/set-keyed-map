@@ -1,11 +1,47 @@
 {
   "name": "set-map",
+  "version": "1.0.0",
+  "description": "A map where the keys are Sets. Any two equivalent sets map to the same key, even when they are different objects.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "map",
+    "set",
+    "data-structure",
+    "typescript"
+  ],
+  "author": "Normal Gaussian <github.march.2019@normal-gaussian.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NormalGaussian/set-map.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NormalGaussian/set-map/issues"
+  },
+  "homepage": "https://github.com/NormalGaussian/set-map#readme",
   "packageManager": "yarn@4.9.2",
   "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "format": "prettier --write . --cache-location=.prettier-cache",
+    "prepublishOnly": "yarn build",
     "test": "node --test --experimental-transform-types test/**/*.test.ts"
   },
   "devDependencies": {
     "@types/node": "^24.0.15",
+    "prettier": "^3.6.2",
     "typescript": "^5.8.3"
   },
   "type": "module"

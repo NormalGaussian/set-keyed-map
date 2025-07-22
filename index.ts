@@ -2,18 +2,18 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
   private valueMap = new Map<K, V>();
   private subkeyToKeys = new Map<KT, K[]>();
 
+  /** Number of entries pairs in the map. */
   get size() {
     return this.valueMap.size;
   }
 
+  /** Removes all entries. */
   clear() {
     this.valueMap.clear();
     this.subkeyToKeys.clear();
   }
 
-  /**
-   * Converts an arbitrary set of keys to the canonical set of keys.
-   */
+  /** Finds the canonical key, or false if not found. */
   private getCannonicalKey(key: K): K | false {
     /**
      * A key is a set of subkeys.
@@ -64,16 +64,19 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
     return false;
   }
 
+  /** Creates a new canonical key from an existing set. */
   private createCanonicalKey(from: K): K {
     return new Set(Array.from(from)) as K;
   }
+  /** Creates a new user-facing key copy. */
   private createUserFacingKey(from: K): K {
     return new Set(Array.from(from)) as K;
   }
 
+  /** Associates a value with this key in this set. */
   set(key: K, value: V): this {
     const existingCanonicalKey = this.getCannonicalKey(key);
-    
+
     if (existingCanonicalKey) {
       // Update existing key
       this.valueMap.set(existingCanonicalKey, value);
@@ -81,7 +84,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
       // Create new key and populate subkeyToKeys index
       const canonicalKey = this.createCanonicalKey(key);
       this.valueMap.set(canonicalKey, value);
-      
+
       // Update subkeyToKeys index for each subkey in the canonical key
       for (const subkey of canonicalKey) {
         const keyList = this.subkeyToKeys.get(subkey) || [];
@@ -89,10 +92,11 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
         this.subkeyToKeys.set(subkey, keyList);
       }
     }
-    
+
     return this;
   }
 
+  /** Removes the entry. Returns true if an entry was removed. */
   delete(key: K) {
     const canonicalKey = this.getCannonicalKey(key);
     if (!canonicalKey) {
@@ -124,6 +128,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
     return true;
   }
 
+  /** Returns the value, or undefined if not found. */
   get(key: K): V | undefined {
     // Get the canonical key representation for this key
     const canonicalKey = this.getCannonicalKey(key);
@@ -134,6 +139,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
     return this.valueMap.get(canonicalKey);
   }
 
+  /** Returns true if an entry exists. */
   has(key: K): boolean {
     // Get the canonical key representation for this key
     const canonicalKey = this.getCannonicalKey(key);
@@ -144,16 +150,19 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
     return this.valueMap.has(canonicalKey);
   }
 
+  /** Iterator over all set keys. */
   *keys(): MapIterator<K> {
     for (const key of this.valueMap.keys()) {
       yield this.createUserFacingKey(key);
     }
   }
 
+  /** Iterator over all values. */
   *values(): MapIterator<V> {
     yield* this.valueMap.values();
   }
 
+  /** Iterator over all key-value pairs. */
   *entries(): MapIterator<[K, V]> {
     for (const [key, value] of this.valueMap.entries()) {
       yield [this.createUserFacingKey(key), value];
@@ -170,6 +179,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
     this.clear();
   }
 
+  /** Executes a callback for each entry. */
   forEach(
     callbackfn: (value: V, key: K, map: SetMap<KT, V, K>) => void,
     thisArg?: any,
@@ -179,7 +189,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
     }
   }
 
-  /** Array likes */
+  /** Tests whether all entries pass the provided predicate. */
   every(
     callbackfn: (value: V, key: K, map: SetMap<KT, V, K>) => boolean,
     thisArg?: any,
@@ -192,6 +202,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
     return true;
   }
 
+  /** Returns a new SetMap with entries that pass the predicate. */
   filter(
     callbackfn: (value: V, key: K, map: SetMap<KT, V, K>) => boolean,
     thisArg?: any,
@@ -205,6 +216,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
     return result;
   }
 
+  /** Tests whether at least one entry passes the predicate. */
   some(
     callbackfn: (value: V, key: K, map: SetMap<KT, V, K>) => boolean,
     thisArg?: any,
@@ -217,6 +229,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
     return false;
   }
 
+  /** Returns the first entry that matches the predicate. */
   find(
     callbackfn: (value: V, key: K, map: SetMap<KT, V, K>) => boolean,
     thisArg?: any,
@@ -229,6 +242,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
     return undefined;
   }
 
+  /** Returns true if any entry has this value. */
   includes(value: V): boolean {
     for (const v of this.values()) {
       if (v === value) {
@@ -238,6 +252,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
     return false;
   }
 
+  /** Maps entries to an array of transformed values. */
   map<T>(
     callbackfn: (value: V, key: K, map: SetMap<KT, V, K>) => T,
     thisArg?: any,
@@ -249,6 +264,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
     return result;
   }
 
+  /** Maps entries to arrays and flattens the result. */
   flatMap<T>(
     callbackfn: (value: V, key: K, map: SetMap<KT, V, K>) => T[],
     thisArg?: any,
@@ -260,6 +276,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
     return result;
   }
 
+  /** Returns a new SetMap with transformed values. */
   mapOver<T>(
     callbackfn: (value: V, key: K, map: SetMap<KT, V, K>) => T,
     thisArg?: any,
@@ -271,6 +288,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
     return result;
   }
 
+  /** Reduces entries to a single value from left to right. */
   reduce<T>(
     callbackfn: (
       previousValue: T,
@@ -287,6 +305,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
     return accumulator;
   }
 
+  /** Reduces entries to a single value from right to left. */
   reduceRight<T>(
     callbackfn: (
       previousValue: T,
