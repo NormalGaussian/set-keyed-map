@@ -1,10 +1,10 @@
 import { test, describe } from "node:test";
 import { strict as assert } from "node:assert";
-import { SetMap } from "../index.ts";
+import { SetKeyedMap } from "../index.ts";
 
-describe("SetMap - Edge cases", () => {
+describe("SetKeyedMap - Edge cases", () => {
   test("should handle single element sets", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     const key = new Set(["a"]);
 
     map.set(key, 42);
@@ -12,7 +12,7 @@ describe("SetMap - Edge cases", () => {
   });
 
   test("should handle large sets", () => {
-    const map = new SetMap<number, string>();
+    const map = new SetKeyedMap<number, string>();
     const key = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
     map.set(key, "test");
@@ -20,7 +20,7 @@ describe("SetMap - Edge cases", () => {
   });
 
   test("should handle different Set implementations with same content", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     const key1 = new Set(["a", "b", "c"]);
     const key2 = new Set(["c", "a", "b"]);
     const key3 = new Set(["b", "c", "a"]);
@@ -32,7 +32,7 @@ describe("SetMap - Edge cases", () => {
   });
 
   test("should handle overlapping but different sets", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     map.set(new Set(["a", "b"]), 42);
     map.set(new Set(["a", "c"]), 100);
     map.set(new Set(["b", "c"]), 200);
@@ -44,9 +44,9 @@ describe("SetMap - Edge cases", () => {
   });
 });
 
-describe("SetMap - Complex scenarios", () => {
+describe("SetKeyedMap - Complex scenarios", () => {
   test("should handle mixed operations", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
 
     map.set(new Set(["a", "b"]), 1);
     map.set(new Set(["c", "d"]), 2);
@@ -64,7 +64,7 @@ describe("SetMap - Complex scenarios", () => {
   });
 
   test("should maintain canonical keys correctly", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
 
     const key1 = new Set(["x", "y", "z"]);
     const key2 = new Set(["z", "x", "y"]);
@@ -81,7 +81,7 @@ describe("SetMap - Complex scenarios", () => {
   });
 
   test("should handle sets with different sizes correctly", () => {
-    const map = new SetMap<number, string>();
+    const map = new SetKeyedMap<number, string>();
 
     map.set(new Set([1]), "one");
     map.set(new Set([1, 2]), "one-two");

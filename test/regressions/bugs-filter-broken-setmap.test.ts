@@ -1,10 +1,10 @@
 import { test, describe } from "node:test";
 import { strict as assert } from "node:assert";
-import { SetMap } from "../../index.ts";
+import { SetKeyedMap } from "../../index.ts";
 
-describe("Bug: filter() Method Creates Broken SetMap Instance", () => {
-  test("filtered SetMap should work with equivalent keys for get()", () => {
-    const originalMap = new SetMap<string, number>();
+describe("Bug: filter() Method Creates Broken SetKeyedMap Instance", () => {
+  test("filtered SetKeyedMap should work with equivalent keys for get()", () => {
+    const originalMap = new SetKeyedMap<string, number>();
     originalMap.set(new Set(["a", "b"]), 1);
     originalMap.set(new Set(["c", "d"]), 2);
     originalMap.set(new Set(["e", "f"]), 3);
@@ -28,8 +28,8 @@ describe("Bug: filter() Method Creates Broken SetMap Instance", () => {
     assert.equal(filtered.get(key4), 4);
   });
 
-  test("filtered SetMap should work with equivalent keys for has()", () => {
-    const originalMap = new SetMap<string, number>();
+  test("filtered SetKeyedMap should work with equivalent keys for has()", () => {
+    const originalMap = new SetKeyedMap<string, number>();
     originalMap.set(new Set(["a", "b"]), 1);
     originalMap.set(new Set(["c", "d"]), 2);
     originalMap.set(new Set(["e", "f"]), 3);
@@ -51,8 +51,8 @@ describe("Bug: filter() Method Creates Broken SetMap Instance", () => {
     assert.equal(filtered.has(key4), true);
   });
 
-  test("filtered SetMap should work with equivalent keys for delete()", () => {
-    const originalMap = new SetMap<string, number>();
+  test("filtered SetKeyedMap should work with equivalent keys for delete()", () => {
+    const originalMap = new SetKeyedMap<string, number>();
     originalMap.set(new Set(["a", "b"]), 1);
     originalMap.set(new Set(["c", "d"]), 2);
     originalMap.set(new Set(["e", "f"]), 3);
@@ -73,7 +73,7 @@ describe("Bug: filter() Method Creates Broken SetMap Instance", () => {
   });
 
   test("chaining filter operations should work", () => {
-    const originalMap = new SetMap<string, number>();
+    const originalMap = new SetKeyedMap<string, number>();
     originalMap.set(new Set(["a", "b"]), 1);
     originalMap.set(new Set(["c", "d"]), 2);
     originalMap.set(new Set(["e", "f"]), 3);
@@ -96,15 +96,15 @@ describe("Bug: filter() Method Creates Broken SetMap Instance", () => {
     assert.equal(secondFilter.get(key2Equiv), 3);
   });
 
-  test("filtered SetMap can be used for new operations", () => {
-    const originalMap = new SetMap<string, number>();
+  test("filtered SetKeyedMap can be used for new operations", () => {
+    const originalMap = new SetKeyedMap<string, number>();
     originalMap.set(new Set(["a", "b"]), 10);
     originalMap.set(new Set(["c", "d"]), 20);
 
     const filtered = originalMap.filter((value) => value > 5);
     assert.equal(filtered.size, 2);
 
-    // Should be able to add new items to filtered SetMap
+    // Should be able to add new items to filtered SetKeyedMap
     filtered.set(new Set(["new", "key"]), 999);
     assert.equal(filtered.size, 3);
 
@@ -115,7 +115,7 @@ describe("Bug: filter() Method Creates Broken SetMap Instance", () => {
   });
 
   test("complex filtering with key-dependent predicates", () => {
-    const originalMap = new SetMap<string, number>();
+    const originalMap = new SetKeyedMap<string, number>();
     originalMap.set(new Set(["a", "b"]), 1);
     originalMap.set(new Set(["c", "d"]), 2);
     originalMap.set(new Set(["x", "y", "z"]), 10);
@@ -138,7 +138,7 @@ describe("Bug: filter() Method Creates Broken SetMap Instance", () => {
   });
 
   test("original map remains functional after filter", () => {
-    const originalMap = new SetMap<string, number>();
+    const originalMap = new SetKeyedMap<string, number>();
     originalMap.set(new Set(["a", "b"]), 1);
     originalMap.set(new Set(["c", "d"]), 2);
     originalMap.set(new Set(["e", "f"]), 3);

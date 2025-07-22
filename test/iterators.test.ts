@@ -1,10 +1,10 @@
 import { test, describe } from "node:test";
 import { strict as assert } from "node:assert";
-import { SetMap } from "../index.ts";
+import { SetKeyedMap } from "../index.ts";
 
-describe("SetMap - Iterators", () => {
+describe("SetKeyedMap - Iterators", () => {
   test("should iterate over keys", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     map.set(new Set(["a", "b"]), 42);
     map.set(new Set(["c", "d"]), 100);
 
@@ -15,7 +15,7 @@ describe("SetMap - Iterators", () => {
   });
 
   test("should iterate over values", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     map.set(new Set(["a", "b"]), 42);
     map.set(new Set(["c", "d"]), 100);
 
@@ -27,7 +27,7 @@ describe("SetMap - Iterators", () => {
   });
 
   test("should iterate over entries", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     map.set(new Set(["a", "b"]), 42);
     map.set(new Set(["c", "d"]), 100);
 
@@ -36,7 +36,7 @@ describe("SetMap - Iterators", () => {
   });
 
   test("should use Symbol.iterator", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     map.set(new Set(["a", "b"]), 42);
 
     const entries = Array.from(map);
@@ -45,9 +45,9 @@ describe("SetMap - Iterators", () => {
   });
 });
 
-describe("SetMap - forEach", () => {
+describe("SetKeyedMap - forEach", () => {
   test("should iterate with forEach", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     map.set(new Set(["a", "b"]), 42);
     map.set(new Set(["c", "d"]), 100);
 
@@ -60,7 +60,7 @@ describe("SetMap - forEach", () => {
   });
 
   test("should use thisArg in forEach", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     map.set(new Set(["a"]), 42);
 
     const context = { multiplier: 2 };

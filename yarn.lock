@@ -23,9 +23,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"set-map@workspace:.":
+"set-keyed-map@workspace:.":
   version: 0.0.0-use.local
-  resolution: "set-map@workspace:."
+  resolution: "set-keyed-map@workspace:."
   dependencies:
     "@types/node": "npm:^24.0.15"
     prettier: "npm:^3.6.2"

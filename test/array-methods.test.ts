@@ -1,10 +1,10 @@
 import { test, describe } from "node:test";
 import { strict as assert } from "node:assert";
-import { SetMap } from "../index.ts";
+import { SetKeyedMap } from "../index.ts";
 
-describe("SetMap - Array-like methods", () => {
+describe("SetKeyedMap - Array-like methods", () => {
   test("should test every condition", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     map.set(new Set(["a"]), 2);
     map.set(new Set(["b"]), 4);
     map.set(new Set(["c"]), 6);
@@ -20,7 +20,7 @@ describe("SetMap - Array-like methods", () => {
   });
 
   test("should filter entries", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     map.set(new Set(["a"]), 2);
     map.set(new Set(["b"]), 4);
     map.set(new Set(["c"]), 6);
@@ -32,7 +32,7 @@ describe("SetMap - Array-like methods", () => {
   });
 
   test("should test some condition", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     map.set(new Set(["a"]), 2);
     map.set(new Set(["b"]), 4);
 
@@ -47,7 +47,7 @@ describe("SetMap - Array-like methods", () => {
   });
 
   test("should find entry", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     map.set(new Set(["a"]), 2);
     map.set(new Set(["b"]), 4);
 
@@ -60,7 +60,7 @@ describe("SetMap - Array-like methods", () => {
   });
 
   test("should check if includes value", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     map.set(new Set(["a"]), 42);
     map.set(new Set(["b"]), 100);
 
@@ -69,7 +69,7 @@ describe("SetMap - Array-like methods", () => {
   });
 
   test("should map values", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     map.set(new Set(["a"]), 2);
     map.set(new Set(["b"]), 4);
 
@@ -78,7 +78,7 @@ describe("SetMap - Array-like methods", () => {
   });
 
   test("should flatMap values", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     map.set(new Set(["a"]), 2);
     map.set(new Set(["b"]), 3);
 
@@ -86,8 +86,8 @@ describe("SetMap - Array-like methods", () => {
     assert.equal(flattened.length, 4);
   });
 
-  test("should mapOver to new SetMap", () => {
-    const map = new SetMap<string, number>();
+  test("should mapOver to new SetKeyedMap", () => {
+    const map = new SetKeyedMap<string, number>();
     map.set(new Set(["a"]), 2);
     map.set(new Set(["b"]), 4);
 
@@ -98,7 +98,7 @@ describe("SetMap - Array-like methods", () => {
   });
 
   test("should reduce values", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     map.set(new Set(["a"]), 2);
     map.set(new Set(["b"]), 4);
     map.set(new Set(["c"]), 6);
@@ -108,7 +108,7 @@ describe("SetMap - Array-like methods", () => {
   });
 
   test("should reduceRight values", () => {
-    const map = new SetMap<string, string>();
+    const map = new SetKeyedMap<string, string>();
     map.set(new Set(["a"]), "A");
     map.set(new Set(["b"]), "B");
 

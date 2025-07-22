@@ -1,5 +1,5 @@
 {
-  "name": "set-map",
+  "name": "set-keyed-map",
   "version": "1.0.0",
   "description": "A map where the keys are Sets. Any two equivalent sets map to the same key, even when they are different objects.",
   "main": "./dist/index.js",
@@ -25,12 +25,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/NormalGaussian/set-map.git"
+    "url": "https://github.com/NormalGaussian/set-keyed-map.git"
   },
   "bugs": {
-    "url": "https://github.com/NormalGaussian/set-map/issues"
+    "url": "https://github.com/NormalGaussian/set-keyed-map/issues"
   },
-  "homepage": "https://github.com/NormalGaussian/set-map#readme",
+  "homepage": "https://github.com/NormalGaussian/set-keyed-map#readme",
   "packageManager": "yarn@4.9.2",
   "scripts": {
     "build": "tsc",

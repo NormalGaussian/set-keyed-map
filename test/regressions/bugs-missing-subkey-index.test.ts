@@ -1,10 +1,10 @@
 import { test, describe } from "node:test";
 import { strict as assert } from "node:assert";
-import { SetMap } from "../../index.ts";
+import { SetKeyedMap } from "../../index.ts";
 
 describe("Bug: Missing subkeyToKeys Index Population in set() Method", () => {
   test("get() should work with equivalent keys", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     const key1 = new Set(["a", "b"]);
     const key2 = new Set(["b", "a"]); // Same elements, different order
 
@@ -16,7 +16,7 @@ describe("Bug: Missing subkeyToKeys Index Population in set() Method", () => {
   });
 
   test("has() should work with equivalent keys", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     const key1 = new Set(["x", "y", "z"]);
     const key2 = new Set(["z", "y", "x"]); // Same elements, different order
 
@@ -28,7 +28,7 @@ describe("Bug: Missing subkeyToKeys Index Population in set() Method", () => {
   });
 
   test("delete() should work with equivalent keys", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     const key1 = new Set(["foo", "bar"]);
     const key2 = new Set(["bar", "foo"]); // Same elements, different order
 
@@ -41,7 +41,7 @@ describe("Bug: Missing subkeyToKeys Index Population in set() Method", () => {
   });
 
   test("different insertion orders should be equivalent", () => {
-    const map = new SetMap<string, string>();
+    const map = new SetKeyedMap<string, string>();
     const key1 = new Set(["1", "2", "3"]);
     const key2 = new Set(["3", "1", "2"]);
     const key3 = new Set(["2", "3", "1"]);
@@ -59,7 +59,7 @@ describe("Bug: Missing subkeyToKeys Index Population in set() Method", () => {
   });
 
   test("complex sets with multiple elements", () => {
-    const map = new SetMap<string, string>();
+    const map = new SetKeyedMap<string, string>();
     const key1 = new Set(["alpha", "beta", "gamma", "delta"]);
     const key2 = new Set(["delta", "alpha", "gamma", "beta"]);
     const key3 = new Set(["gamma", "delta", "alpha", "beta"]);
@@ -74,7 +74,7 @@ describe("Bug: Missing subkeyToKeys Index Population in set() Method", () => {
   });
 
   test("single element sets should work", () => {
-    const map = new SetMap<string, string>();
+    const map = new SetKeyedMap<string, string>();
     const key1 = new Set(["solo"]);
     const key2 = new Set(["solo"]); // Equivalent
 
@@ -84,7 +84,7 @@ describe("Bug: Missing subkeyToKeys Index Population in set() Method", () => {
   });
 
   test("size reflects actual number of canonical keys", () => {
-    const map = new SetMap<string, number>();
+    const map = new SetKeyedMap<string, number>();
     const key1 = new Set(["x", "y"]);
     const key2 = new Set(["y", "x"]); // Equivalent to key1
     const key3 = new Set(["a", "b"]); // Different
@@ -100,7 +100,7 @@ describe("Bug: Missing subkeyToKeys Index Population in set() Method", () => {
   });
 
   test("iteration should include all canonical keys", () => {
-    const map = new SetMap<string, string>();
+    const map = new SetKeyedMap<string, string>();
     const key1 = new Set(["p", "q"]);
     const key2 = new Set(["q", "p"]); // Equivalent
     const key3 = new Set(["r", "s"]); // Different

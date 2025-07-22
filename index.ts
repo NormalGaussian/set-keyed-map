@@ -1,4 +1,6 @@
-export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
+export class SetKeyedMap<KT, V, K extends Set<KT> = Set<KT>>
+  implements Map<K, V>
+{
   private valueMap = new Map<K, V>();
   private subkeyToKeys = new Map<KT, K[]>();
 
@@ -173,7 +175,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
     return this.entries();
   }
 
-  [Symbol.toStringTag] = "SetMap";
+  [Symbol.toStringTag] = "SetKeyedMap";
 
   [Symbol.dispose](): void {
     this.clear();
@@ -181,7 +183,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
 
   /** Executes a callback for each entry. */
   forEach(
-    callbackfn: (value: V, key: K, map: SetMap<KT, V, K>) => void,
+    callbackfn: (value: V, key: K, map: SetKeyedMap<KT, V, K>) => void,
     thisArg?: any,
   ): void {
     for (const [key, value] of this.entries()) {
@@ -191,7 +193,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
 
   /** Tests whether all entries pass the provided predicate. */
   every(
-    callbackfn: (value: V, key: K, map: SetMap<KT, V, K>) => boolean,
+    callbackfn: (value: V, key: K, map: SetKeyedMap<KT, V, K>) => boolean,
     thisArg?: any,
   ): boolean {
     for (const [key, value] of this.entries()) {
@@ -202,12 +204,12 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
     return true;
   }
 
-  /** Returns a new SetMap with entries that pass the predicate. */
+  /** Returns a new SetKeyedMap with entries that pass the predicate. */
   filter(
-    callbackfn: (value: V, key: K, map: SetMap<KT, V, K>) => boolean,
+    callbackfn: (value: V, key: K, map: SetKeyedMap<KT, V, K>) => boolean,
     thisArg?: any,
-  ): SetMap<KT, V, K> {
-    const result = new SetMap<KT, V, K>();
+  ): SetKeyedMap<KT, V, K> {
+    const result = new SetKeyedMap<KT, V, K>();
     for (const [key, value] of this.entries()) {
       if (callbackfn.call(thisArg, value, key, this)) {
         result.set(key, value);
@@ -218,7 +220,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
 
   /** Tests whether at least one entry passes the predicate. */
   some(
-    callbackfn: (value: V, key: K, map: SetMap<KT, V, K>) => boolean,
+    callbackfn: (value: V, key: K, map: SetKeyedMap<KT, V, K>) => boolean,
     thisArg?: any,
   ): boolean {
     for (const [key, value] of this.entries()) {
@@ -231,7 +233,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
 
   /** Returns the first entry that matches the predicate. */
   find(
-    callbackfn: (value: V, key: K, map: SetMap<KT, V, K>) => boolean,
+    callbackfn: (value: V, key: K, map: SetKeyedMap<KT, V, K>) => boolean,
     thisArg?: any,
   ): [K, V] | undefined {
     for (const [key, value] of this.entries()) {
@@ -254,7 +256,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
 
   /** Maps entries to an array of transformed values. */
   map<T>(
-    callbackfn: (value: V, key: K, map: SetMap<KT, V, K>) => T,
+    callbackfn: (value: V, key: K, map: SetKeyedMap<KT, V, K>) => T,
     thisArg?: any,
   ): T[] {
     const result: T[] = [];
@@ -266,7 +268,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
 
   /** Maps entries to arrays and flattens the result. */
   flatMap<T>(
-    callbackfn: (value: V, key: K, map: SetMap<KT, V, K>) => T[],
+    callbackfn: (value: V, key: K, map: SetKeyedMap<KT, V, K>) => T[],
     thisArg?: any,
   ): T[] {
     const result: T[] = [];
@@ -276,12 +278,12 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
     return result;
   }
 
-  /** Returns a new SetMap with transformed values. */
+  /** Returns a new SetKeyedMap with transformed values. */
   mapOver<T>(
-    callbackfn: (value: V, key: K, map: SetMap<KT, V, K>) => T,
+    callbackfn: (value: V, key: K, map: SetKeyedMap<KT, V, K>) => T,
     thisArg?: any,
-  ): SetMap<KT, T, K> {
-    const result = new SetMap<KT, T, K>();
+  ): SetKeyedMap<KT, T, K> {
+    const result = new SetKeyedMap<KT, T, K>();
     for (const [key, value] of this.entries()) {
       result.set(key, callbackfn.call(thisArg, value, key, this));
     }
@@ -294,7 +296,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
       previousValue: T,
       value: V,
       key: K,
-      map: SetMap<KT, V, K>,
+      map: SetKeyedMap<KT, V, K>,
     ) => T,
     initialValue: T,
   ): T {
@@ -311,7 +313,7 @@ export class SetMap<KT, V, K extends Set<KT> = Set<KT>> implements Map<K, V> {
       previousValue: T,
       value: V,
       key: K,
-      map: SetMap<KT, V, K>,
+      map: SetKeyedMap<KT, V, K>,
     ) => T,
     initialValue: T,
   ): T {

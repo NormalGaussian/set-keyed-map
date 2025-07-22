@@ -1,10 +1,10 @@
 import { test, describe } from "node:test";
 import { strict as assert } from "node:assert";
-import { SetMap } from "../../index.ts";
+import { SetKeyedMap } from "../../index.ts";
 
-describe("Bug: mapOver() Method Creates Broken SetMap Instance", () => {
-  test("mapped SetMap should work with equivalent keys for get()", () => {
-    const originalMap = new SetMap<string, number>();
+describe("Bug: mapOver() Method Creates Broken SetKeyedMap Instance", () => {
+  test("mapped SetKeyedMap should work with equivalent keys for get()", () => {
+    const originalMap = new SetKeyedMap<string, number>();
     originalMap.set(new Set(["a", "b"]), 10);
     originalMap.set(new Set(["c", "d"]), 20);
     originalMap.set(new Set(["e", "f"]), 30);
@@ -28,8 +28,8 @@ describe("Bug: mapOver() Method Creates Broken SetMap Instance", () => {
     assert.equal(doubled.get(key4), 40);
   });
 
-  test("mapped SetMap should work with equivalent keys for has()", () => {
-    const originalMap = new SetMap<string, number>();
+  test("mapped SetKeyedMap should work with equivalent keys for has()", () => {
+    const originalMap = new SetKeyedMap<string, number>();
     originalMap.set(new Set(["a", "b"]), 10);
     originalMap.set(new Set(["c", "d"]), 20);
     originalMap.set(new Set(["e", "f"]), 30);
@@ -51,8 +51,8 @@ describe("Bug: mapOver() Method Creates Broken SetMap Instance", () => {
     assert.equal(stringified.has(key4), true);
   });
 
-  test("mapped SetMap should work with equivalent keys for delete()", () => {
-    const originalMap = new SetMap<string, number>();
+  test("mapped SetKeyedMap should work with equivalent keys for delete()", () => {
+    const originalMap = new SetKeyedMap<string, number>();
     originalMap.set(new Set(["a", "b"]), 10);
     originalMap.set(new Set(["c", "d"]), 20);
     originalMap.set(new Set(["e", "f"]), 30);
@@ -73,7 +73,7 @@ describe("Bug: mapOver() Method Creates Broken SetMap Instance", () => {
   });
 
   test("mathematical transformations should work", () => {
-    const originalMap = new SetMap<string, number>();
+    const originalMap = new SetKeyedMap<string, number>();
     originalMap.set(new Set(["a", "b"]), 10);
     originalMap.set(new Set(["c", "d"]), 20);
 
@@ -94,7 +94,7 @@ describe("Bug: mapOver() Method Creates Broken SetMap Instance", () => {
   });
 
   test("type transformation to strings should work", () => {
-    const originalMap = new SetMap<string, number>();
+    const originalMap = new SetKeyedMap<string, number>();
     originalMap.set(new Set(["e", "f"]), 30);
     originalMap.set(new Set(["g", "h"]), 40);
 
@@ -110,7 +110,7 @@ describe("Bug: mapOver() Method Creates Broken SetMap Instance", () => {
   });
 
   test("mapping to complex objects should work", () => {
-    const originalMap = new SetMap<string, number>();
+    const originalMap = new SetKeyedMap<string, number>();
     originalMap.set(new Set(["g", "h"]), 40);
 
     const asObjects = originalMap.mapOver((value, key) => ({
@@ -132,7 +132,7 @@ describe("Bug: mapOver() Method Creates Broken SetMap Instance", () => {
   });
 
   test("chaining mapOver operations should work", () => {
-    const originalMap = new SetMap<string, number>();
+    const originalMap = new SetKeyedMap<string, number>();
     originalMap.set(new Set(["a", "b"]), 10);
     originalMap.set(new Set(["c", "d"]), 20);
 
@@ -151,7 +151,7 @@ describe("Bug: mapOver() Method Creates Broken SetMap Instance", () => {
   });
 
   test("mapOver then filter chain should work", () => {
-    const originalMap = new SetMap<string, number>();
+    const originalMap = new SetKeyedMap<string, number>();
     originalMap.set(new Set(["a", "b"]), 10);
     originalMap.set(new Set(["c", "d"]), 20);
     originalMap.set(new Set(["e", "f"]), 30);
@@ -174,7 +174,7 @@ describe("Bug: mapOver() Method Creates Broken SetMap Instance", () => {
   });
 
   test("mapping with key-dependent transformations", () => {
-    const originalMap = new SetMap<string, number>();
+    const originalMap = new SetKeyedMap<string, number>();
     originalMap.set(new Set(["a", "b"]), 10);
     originalMap.set(new Set(["c", "d"]), 20);
 
@@ -194,8 +194,8 @@ describe("Bug: mapOver() Method Creates Broken SetMap Instance", () => {
     assert.equal(keyAwareMap.get(key2), expected); // Should be same result
   });
 
-  test("mapping with access to original SetMap context", () => {
-    const originalMap = new SetMap<string, number>();
+  test("mapping with access to original SetKeyedMap context", () => {
+    const originalMap = new SetKeyedMap<string, number>();
     originalMap.set(new Set(["a", "b"]), 10);
     originalMap.set(new Set(["c", "d"]), 40);
 
@@ -219,13 +219,13 @@ describe("Bug: mapOver() Method Creates Broken SetMap Instance", () => {
     });
   });
 
-  test("mapped SetMap can be used for new operations", () => {
-    const originalMap = new SetMap<string, number>();
+  test("mapped SetKeyedMap can be used for new operations", () => {
+    const originalMap = new SetKeyedMap<string, number>();
     originalMap.set(new Set(["a", "b"]), 10);
 
     const mapped = originalMap.mapOver((value) => value * 10);
 
-    // Should be able to add new items to mapped SetMap
+    // Should be able to add new items to mapped SetKeyedMap
     mapped.set(new Set(["test"]), 42);
     assert.equal(mapped.size, 2);
 
@@ -235,7 +235,7 @@ describe("Bug: mapOver() Method Creates Broken SetMap Instance", () => {
   });
 
   test("original map remains unchanged after mapOver", () => {
-    const originalMap = new SetMap<string, number>();
+    const originalMap = new SetKeyedMap<string, number>();
     originalMap.set(new Set(["a", "b"]), 1);
     originalMap.set(new Set(["c", "d"]), 2);
 

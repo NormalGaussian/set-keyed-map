@@ -6,5 +6,5 @@
 - [PATCH]: Removed descriptions of fixed bugs
 - [MINOR]: Initial repository setup with yarn zero config
 - [MINOR]: Added TypeScript configuration
-- [MINOR]: Added generated tests demonstrating SetMap functionality
-- [MAJOR]: Initial SetMap implementation
+- [MINOR]: Added generated tests demonstrating SetKeyedMap functionality
+- [MAJOR]: Initial SetKeyedMap implementation
